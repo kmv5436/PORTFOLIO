@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="display-4 fw-bold mb-0 me-4">Кармиркардиева Алина Мкртычевна</h1>
+                    <!-- Фото справа от заголовка -->
+                    <div class="doctor-title-photo-container">
+                        <img src="{% static 'images/doctor.jpg' %}" alt="Кармиркардиева Алина Мкртычевна" class="doctor-title-photo">
+                    </div>
+                </div>
+                <p class="lead mb-4">Врач-эндокринолог высшей категории. Специализируюсь на диагностике и лечении заболеваний эндокринной системы.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="#contact" class="btn btn-light btn-lg">Записаться на прием</a>
+                    <a href="#services" class="btn btn-outline-light btn-lg">Узнать об услугах</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Important Section -->
+<section class="container mt-5">
+    <div class="important-section" data-aos="fade-up">
+        <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+                <i class="fas fa-exclamation-circle fa-2x text-primary"></i>
+            </div>
+            <div class="col-md-11">
+                <h4 class="text-primary mb-2">Важная информация!</h4>
+                <p class="mb-0">Прием ведется по предварительной записи. Для точной диагностики при себе иметь результаты предыдущих обследований и выписки. Экстренные случаи рассматриваются в приоритетном порядке.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title text-start">Обо мне</h2>
+                <p class="lead">Более 15 лет практики в эндокринологии</p>
+                <p>Я специализируюсь на диагностике и лечении заболеваний эндокринной системы, включая сахарный диабет, заболевания щитовидной железы, нарушения обмена веществ и гормональные дисбалансы.</p>
+                <p>Регулярно повышаю квалификацию, участвую в международных конференциях и применяю в практике современные доказательные методы лечения.</p>
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <span class="medical-badge">Кандидат медицинских наук</span>
+                    <span class="medical-badge">Высшая категория</span>
+                    <span class="medical-badge">Стаж 15+ лет</span>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                {% for edu in education|slice:":2" %}
+                <div class="education-card">
+                    <h5><i class="fas fa-graduation-cap text-primary me-2"></i>{{ edu.degree }}</h5>
+                    <p class="mb-1"><strong>{{ edu.institution }}</strong></p>
+                    <p class="mb-0 text-muted">{{ edu.years }}</p>
+                    {% if edu.description %}
+                    <p class="mt-2 mb-0">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Specializations Section -->
+<section id="specializations" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Основные направления</h2>
+        <div class="row g-4">
+            {% for spec in specializations %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="specialization-card">
+                    <div class="specialization-icon">
+                        <i class="{{ spec.icon }}"></i>
+                    </div>
+                    <h4>{{ spec.title }}</h4>
+                    <p>{{ spec.description }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Направления добавляются</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Медицинские услуги</h2>
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="service-card">
+                    <h4><i class="fas fa-stethoscope text-primary me-2"></i>{{ service.title }}</h4>
+                    <p class="mb-2">{{ service.description }}</p>
+                    {% if service.price %}
+                    <p class="mb-0"><strong>Стоимость: {{ service.price }} руб.</strong></p>
+                    {% endif %}
+                    {% if service.duration %}
+                    <p class="mb-0"><small>Продолжительность: {{ service.duration }}</small></p>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Услуги добавляются</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Problems Section -->
+<section id="problems" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Когда следует обратиться к эндокринологу</h2>
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-right">
+                <div class="problem-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary rounded-circle p-3 me-3">
+                            <i class="fas fa-tint text-white fa-lg"></i>
+                        </div>
+                        <h5 class="card-title mb-0">Общие симптомы</h5>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Постоянная усталость и слабость</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Резкие изменения веса</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Нарушения сна</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Повышенная потливость</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Изменения температуры тела</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="problem-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning rounded-circle p-3 me-3">
+                            <i class="fas fa-heartbeat text-white fa-lg"></i>
+                        </div>
+                        <h5 class="card-title mb-0">Специфические симптомы</h5>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Жажда и частое мочеиспускание</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Изменения кожи и волос</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Нарушения менструального цикла</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Сердцебиение и дрожь</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Изменения настроения</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section id="education" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Образование и достижения</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% for edu in education %}
+                <div class="education-card" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                    <h5><i class="fas fa-graduation-cap text-primary me-2"></i>{{ edu.degree }}</h5>
+                    <p class="mb-1"><strong>{{ edu.institution }}</strong></p>
+                    <p class="mb-2 text-muted">{{ edu.years }}</p>
+                    {% if edu.description %}
+                    <p class="mb-0">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <div class="text-center">
+                    <p>Информация об образовании добавляется</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Отзывы пациентов</h2>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary rounded-circle p-2 me-3">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-semibold">{{ testimonial.name }}</h6>
+                            <small class="text-muted">{{ testimonial.condition }}</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"{{ testimonial.content }}"</p>
+                    <div class="mt-2">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= testimonial.rating %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="far fa-star text-warning"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Отзывы появятся скоро</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Leave Review Section -->
+<section id="leave-review" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Оставить отзыв</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="review-form-container" data-aos="fade-up">
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-4">
+                            <p class="text-center text-muted mb-4">
+                                Поделитесь вашими впечатлениями о лечении. Ваш отзыв поможет другим пациентам.
+                            </p>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="review_submit" value="true">
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{ review_form.name.label }}</label>
+                                        {{ review_form.name }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{ review_form.rating.label }}</label>
+                                        <div class="rating-stars">
+                                            {% for choice in review_form.rating %}
+                                            <div class="form-check form-check-inline">
+                                                {{ choice.tag }}
+                                                <label class="form-check-label star-label" for="{{ choice.id_for_label }}">
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="ms-1">{{ choice.choice_label }}</span>
+                                                </label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{ review_form.email.label }}</label>
+                                        {{ review_form.email }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{ review_form.phone.label }}</label>
+                                        {{ review_form.phone }}
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">{{ review_form.review_text.label }}</label>
+                                        {{ review_form.review_text }}
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="review_consent" required>
+                                            <label class="form-check-label" for="review_consent">
+                                                Даю согласие на публикацию отзыва на сайте
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary w-100 py-2">
+                                            <i class="fas fa-paper-plane me-2"></i>Отправить отзыв
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Запись на прием</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form" data-aos="fade-up">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="contact_submit" value="true">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ contact_form.name.label }}</label>
+                                {{ contact_form.name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ contact_form.phone.label }}</label>
+                                {{ contact_form.phone }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ contact_form.email.label }}</label>
+                                {{ contact_form.email }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ contact_form.message.label }}</label>
+                                {{ contact_form.message }}
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" required>
+                                    <label class="form-check-label" for="consent">
+                                        Даю согласие на обработку персональных данных
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100 py-2">
+                                    <i class="fas fa-calendar-check me-2"></i>Записаться на консультацию
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

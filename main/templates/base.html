@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Врач-эндокринолог | Кармиркардиева А.М.{% endblock %}</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    {% load static %}
+    
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --accent-color: #fbbc04;
+            --dark-color: #2e7d32;
+            --light-color: #f8fafc;
+            --text-color: #334155;
+            --gradient: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+            --medical-gradient: linear-gradient(135deg, #1a73e8 0%, #2e7d32 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            background: var(--medical-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doctor-photo-container {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            margin-right: 12px;
+        }
+
+        .doctor-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top; /* Обрезает снизу, выравнивает по верху */
+        }
+
+        .doctor-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .navbar-brand-content {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Остальные стили остаются без изменений */
+        .hero-section {
+            background: var(--medical-gradient);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 0,100 0,50 1000,0"></polygon></svg>');
+            background-size: cover;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--medical-gradient);
+            border-radius: 2px;
+        }
+
+        .doctor-title-photo-container {
+            width: min(2000px, 2000vw);  /* Адаптивный размер */
+            height: min(450px, 45vw); /* Адаптивная высота */
+            border-radius: 20px;
+            overflow: hidden;
+            border: 6px solid rgba(255,255,255,0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-left: 30px;
+        }
+
+        .doctor-title-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* На мобильных устройствах фото под текстом */
+        @media (max-width: 768px) {
+            .hero-section .d-flex {
+                flex-direction: column;
+                text-align: center;
+            }
+    
+            .doctor-title-photo-container {
+                margin-left: 0;
+                margin-top: 20px;
+                width: 280px;
+                height: 350px;
+            }
+        }
+
+        .footer a {
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-color) !important;
+        }
+
+        /* Review Form Styles */
+        .review-form-container {
+            background: white;
+            border-radius: 15px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .rating-stars .form-check {
+            margin: 0;
+        }
+
+        .rating-stars input[type="radio"] {
+            display: none;
+        }
+
+        .star-label {
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+        }
+
+        .star-label:hover {
+            border-color: var(--primary-color);
+            background-color: #f8fafc;
+        }
+
+        .rating-stars input[type="radio"]:checked + .star-label {
+            border-color: var(--accent-color);
+            background-color: #fffbf0;
+            color: var(--accent-color);
+        }
+
+        .star-label .fa-star {
+            color: #e5e7eb;
+            transition: color 0.3s ease;
+        }
+
+        .rating-stars input[type="radio"]:checked + .star-label .fa-star {
+            color: var(--accent-color);
+        }
+
+        /* Different colors for different ratings */
+        .rating-stars input[type="radio"][value="1"]:checked + .star-label {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .rating-stars input[type="radio"][value="2"]:checked + .star-label {
+            border-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+
+        .rating-stars input[type="radio"][value="3"]:checked + .star-label {
+            border-color: #eab308;
+            background-color: #fefce8;
+        }
+
+        .rating-stars input[type="radio"][value="4"]:checked + .star-label {
+            border-color: #84cc16;
+            background-color: #f7fee7;
+        }
+
+        .rating-stars input[type="radio"][value="5"]:checked + .star-label {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+        }
+
+        
+        /* ... остальные стили ... */
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="/">
+                <div class="navbar-brand-content">
+                    <!-- Фото врача -->
+                    <div class="doctor-photo-container">
+                        <img src="{% static 'images/doctor1.jpg' %}" alt="Кармиркардиева А.М." class="doctor-photo">
+                    </div>
+                    <div>
+                        <i class="fas fa-stethoscope me-2"></i>Кармиркардиева А.М.
+                    </div>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#about">Обо мне</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#specializations">Специализация</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#services">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#problems">Симптомы</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#education">Образование</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#testimonials">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#leave-review">Оставить отзыв</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#contact">Запись</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Кармиркардиева А.М.</h5>
+                    <p>Врач-эндокринолог высшей категории. Помогаю восстановить гормональное здоровье и улучшить качество жизни.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="text-red mb-3">Документы</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#" class="text-white text-decoration-none p-2 rounded bg-dark bg-opacity-50 d-block" data-bs-toggle="modal" data-bs-target="#privacyModal">
+                                <i class="fas fa-shield-alt me-2"></i>Политика конфиденциальности
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white text-decoration-none p-2 rounded bg-dark bg-opacity-50 d-block" data-bs-toggle="modal" data-bs-target="#offerModal">
+                                <i class="fas fa-file-contract me-2"></i>Договор оферты
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+7 (993) 450-91-31</li>
+                        <li><i class="fas fa-envelope me-2"></i>neboleyy@yandex.ru</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>г. Ростов-на-Дону</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-white-50">
+            <div class="text-center">
+                <p>&copy; 2025 Кармиркардиева А.М.. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Modals for Policies -->
+    {% include 'modals.html' %}
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    </script>
+</body>
+</html>
