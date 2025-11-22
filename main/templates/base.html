@@ -387,7 +387,46 @@
         backToTop.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({top: 0, behavior: 'smooth'});
+        });  
+        
+        // Close mobile menu when clicking on a link
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Закрытие меню при клике на ссылку
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 992) { // только для мобильных
+                        navbarCollapse.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Закрытие меню при клике вне его области
+            document.addEventListener('click', function(event) {
+                const isClickInsideNavbar = document.querySelector('.navbar').contains(event.target);
+                const isNavbarToggler = navbarToggler.contains(event.target);
+                
+                if (window.innerWidth < 992 && 
+                    !isClickInsideNavbar && 
+                    navbarCollapse.classList.contains('show')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+            
+            // Закрытие меню при скролле на мобильных
+            window.addEventListener('scroll', function() {
+                if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
         });
+
     </script>
+    
+
+
 </body>
 </html>
